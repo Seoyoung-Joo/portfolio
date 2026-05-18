@@ -582,7 +582,8 @@ function openDetail(id) {
   document.getElementById('d-cat').textContent   = cat;
   document.getElementById('d-title').textContent = p.title;
   document.getElementById('d-year').textContent  = p.year;
-  const desc = localStorage.getItem(`pf_desc_${p.id}`) || p.desc || '';
+  const defaultProject = DEFAULT_PROJECTS.find(x => x.id === p.id);
+  const desc = localStorage.getItem(`pf_desc_${p.id}`) || p.desc || defaultProject?.desc || '';
   setDescContent(desc);
   renderMedia(p);
   const ov = document.getElementById('detail-overlay');
