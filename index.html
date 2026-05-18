@@ -472,8 +472,11 @@ const DEFAULT_PROJECTS = [
     desc: ''
   }
 ];
-let projects = JSON.parse(localStorage.getItem('pf_projects') || 'null') || DEFAULT_PROJECTS;
-if (!localStorage.getItem('pf_projects')) save();
+let projects = JSON.parse(localStorage.getItem('pf_projects') || 'null');
+if (!Array.isArray(projects) || projects.length === 0) {
+  projects = DEFAULT_PROJECTS;
+  save();
+}
 let currentId = null;
 function save() {
   try {
