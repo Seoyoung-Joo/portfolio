@@ -397,7 +397,83 @@ const CATS = [
   { id:'web-based',    label:'Web Based'    },
   { id:'graphics',     label:'Graphics'     },
 ];
-let projects  = JSON.parse(localStorage.getItem('pf_projects') || '[]');
+const DEFAULT_PROJECTS = [
+  {
+    id: 'though-their-voices-are-so-soft',
+    title: 'Though their voices are so soft',
+    year: '2025 Jan / sculpture + Projection',
+    cat: 'installation',
+    media: [
+      { src: 'MNST8042.jpg', type: 'image' },
+      { src: 'MNST8045.jpg', type: 'image' },
+      { src: 'TTVASS_vid_1080.mp4', type: 'video' }
+    ],
+    desc: ''
+  },
+  {
+    id: 'goodnightbaby',
+    title: 'Good Night, Baby. Do You Still Remember?',
+    year: '2025 Jan',
+    cat: 'installation',
+    media: [
+      { src: 'goodnight05.jpg', type: 'image' },
+      { src: 'goodnight04.jpg', type: 'image' },
+      { src: 'goodnight02.jpg', type: 'image' },
+      { src: 'goodnight_1080.mp4', type: 'video' },
+      { src: 'MNST8851.jpg', type: 'image' },
+      { src: 'goodnight01_수정.jpg', type: 'image' }
+    ],
+    desc: ''
+  },
+  {
+    id: 'remapping-body',
+    title: 'Remapping body',
+    year: '2026 Jan',
+    cat: 'web-based',
+    media: [
+      { src: 'remappingbodysequencefinal_1080.mp4', type: 'video' },
+      { src: 'remappingbodyscreen_1080.mp4', type: 'video' },
+      { src: 'Screenshot.png', type: 'image' }
+    ],
+    desc: 'Remapping Body (p5.js, 2025)<br><br>An interactive tool built in p5.js that questions the coherence of the human figure by imposing a computational grid onto it.'
+  },
+  {
+    id: 'diagnosis-0-1',
+    title: 'Diagnosis 0:1',
+    year: '2025',
+    cat: 'web-based',
+    media: [],
+    desc: ''
+  },
+  {
+    id: 'take-it-to-go',
+    title: 'Take It To Go!',
+    year: '2025',
+    cat: 'graphics',
+    media: [
+      { src: 'DS1_final_aftereffects_1080.mp4', type: 'video' },
+      { src: 'takeittogo-04.jpg', type: 'image' },
+      { src: 'takeittogo-03.jpg', type: 'image' },
+      { src: 'takeittogo-02.jpg', type: 'image' },
+      { src: 'takeittogo-01.jpg', type: 'image' }
+    ],
+    desc: ''
+  },
+  {
+    id: 'the-piece-of-wild-things',
+    title: 'The Piece of Wild Things',
+    year: '2025',
+    cat: 'graphics',
+    media: [
+      { src: 'wildthings_1080.mp4', type: 'video' },
+      { src: 'XRshared-01.jpg', type: 'image' },
+      { src: 'XRshared-02.jpg', type: 'image' }
+    ],
+    desc: ''
+  }
+];
+let projects = JSON.parse(localStorage.getItem('pf_projects') || 'null') || DEFAULT_PROJECTS;
+if (!localStorage.getItem('pf_projects')) save();
 let currentId = null;
 function save() {
   try {
