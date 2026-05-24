@@ -477,12 +477,22 @@ const DEFAULT_PROJECTS = [
     desc: `<strong>The Piece of Wild Things (AR Book, 2026)</strong><br><br>A visual annotation of Wendell Berry's poem "The Peace of Wild Things," with personal narratives written as footnotes throughout the printed book. Each page triggers an augmented reality layer when scanned: the first generates a branching structure that appears differently with every reading, while the rest unfold AR elements anchored to the text. Built using Mind AR for image tracking and A-Frame for 3D rendering. The project uses the footnote format — typically reserved for citations — to hold personal stories instead, positioning them where references would go but containing my own writing about growth and connection.`
   }
 ];
+const PROJECT_ORDER = new Map(DEFAULT_PROJECTS.map((p, i) => [p.id, i]));
 let projects = JSON.parse(localStorage.getItem('pf_projects') || 'null');
 if (!Array.isArray(projects) || projects.length === 0) {
   projects = DEFAULT_PROJECTS;
   save();
 }
+projects = sortProjects(projects);
+save();
 let currentId = null;
+function sortProjects(list) {
+  return [...list].sort((a, b) => {
+    const ai = PROJECT_ORDER.has(a.id) ? PROJECT_ORDER.get(a.id) : Number.MAX_SAFE_INTEGER;
+    const bi = PROJECT_ORDER.has(b.id) ? PROJECT_ORDER.get(b.id) : Number.MAX_SAFE_INTEGER;
+    return ai - bi;
+  });
+}
 function save() {
   try {
     localStorage.setItem('pf_projects', JSON.stringify(projects));
@@ -742,6 +752,7 @@ function addProject() {
   const year = document.getElementById('new-year').value.trim() || new Date().getFullYear().toString();
   const cat  = document.getElementById('new-cat').value;
   projects.push({id:Date.now().toString(), title, year, cat, media:[], desc:''});
+  projects = sortProjects(projects);
   save(); closeAdd(); renderBoxes();
 }
 
