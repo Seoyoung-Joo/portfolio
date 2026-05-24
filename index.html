@@ -311,6 +311,72 @@ body {
   font-family:var(--font);
   font-size:18px;
 }
+
+@media (max-width: 768px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow: auto;
+  }
+
+  body {
+    display: block;
+    padding: 1rem;
+  }
+
+  .left-box {
+    min-height: 42vh;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .left-top {
+    display: none;
+  }
+
+  .site-name {
+    font-size: clamp(3rem, 18vw, 5rem);
+    line-height: 0.9;
+    white-space: normal;
+    margin-bottom: 1.2rem;
+  }
+
+  .site-bio {
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .left-nav {
+    flex-wrap: wrap;
+    row-gap: 0.7rem;
+  }
+
+  .right-col {
+    width: 100%;
+  }
+
+  .cat-box {
+    padding: 1.35rem 1.45rem 1.55rem;
+  }
+
+  .cat-name {
+    font-size: 1.7rem;
+  }
+
+  .proj-item {
+    font-size: 1.12rem;
+    line-height: 1.32;
+  }
+
+  .detail-inner {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .edit-floating {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
 </style>
 </head>
 <body>
