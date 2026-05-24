@@ -88,6 +88,24 @@ body {
 }
 .left-nav a:hover { color: #fff; }
 
+.edit-floating {
+  position: fixed;
+  right: var(--pad);
+  bottom: var(--pad);
+  z-index: 120;
+  font-family: var(--font);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.12);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.edit-floating:hover { color: rgba(255,255,255,0.45); }
+
 
 /* ── RIGHT BOXES ── */
 .right-col {
@@ -311,7 +329,6 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
         <button class="active" id="btn-work" onclick="showWork()">Work</button>
         <button id="btn-about" onclick="showAbout()">About</button>
         <button id="btn-resume" onclick="window.open('resume.pdf', '_blank')">Resume</button>
-        <button id="btn-edit" onclick="checkAdmin()">Edit</button>
         <a href="mailto:sjoo01@risd.edu">sjoo01@risd.edu</a>
       </div>
     </div>
@@ -330,11 +347,12 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
     <div class="left-nav" style="margin-top:1.5rem;">
       <button id="btn-work2" onclick="showWork()">Work</button>
       <button class="active" id="btn-about2">About</button>
-      <button onclick="checkAdmin()">Edit</button>
     </div>
   </div>
 
 </div>
+
+<button class="edit-floating" onclick="checkAdmin()">Edit</button>
 
 <!-- RIGHT BOXES -->
 <div class="right-col" id="right-col"></div>
