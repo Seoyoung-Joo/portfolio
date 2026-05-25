@@ -105,6 +105,24 @@ body {
   transition: color 0.15s;
 }
 .edit-floating:hover { color: rgba(255,255,255,0.45); }
+.order-save-floating {
+  display: none;
+  position: fixed;
+  right: var(--pad);
+  bottom: calc(var(--pad) + 1.4rem);
+  z-index: 120;
+  font-family: var(--font);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.18);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.order-save-floating:hover { color: rgba(255,255,255,0.6); }
 
 
 /* ── RIGHT BOXES ── */
@@ -280,6 +298,7 @@ body {
 .admin .media-rm,
 .admin .proj-del { display: flex; }
 .admin .desc-tools { display:flex; }
+.admin .order-save-floating { display: block; }
 
 .lightbox {
   display:none;
@@ -376,6 +395,11 @@ body {
     right: 1rem;
     bottom: 1rem;
   }
+
+  .order-save-floating {
+    right: 1rem;
+    bottom: 2.4rem;
+  }
 }
 </style>
 </head>
@@ -419,6 +443,7 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
 </div>
 
 <button class="edit-floating" onclick="checkAdmin()">Edit</button>
+<button class="order-save-floating" onclick="saveOrder()">Save Order</button>
 
 <!-- RIGHT BOXES -->
 <div class="right-col" id="right-col"></div>

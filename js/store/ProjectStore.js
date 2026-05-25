@@ -54,4 +54,20 @@ class ProjectStore {
     this.projects = this.projects.filter(project => project.id !== projectId);
     this.save();
   }
+
+  lockDefaultOrder() {
+    const currentById = new Map(this.projects.map(project => [project.id, project]));
+    const orderedDefaults = this.defaultProjects.map(defaultProject => {
+      const currentProject = currentById.get(defaultProject.id) || {};
+      return {
+        ...defaultProject,
+        ...currentProject,
+        cat: defaultProject.cat,
+        media: defaultProject.media.map(media => ({ ...media }))
+      };
+    });
+    const customProjects = this.projects.filter(project => !this.projectOrder.has(project.id));
+    this.projects = [...orderedDefaults, ...customProjects];
+    return this.save();
+  }
 }

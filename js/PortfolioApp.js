@@ -48,6 +48,7 @@ class PortfolioApp {
     window.openAdd = categoryId => this.openAdd(categoryId);
     window.closeAdd = () => this.addProjectModal.close();
     window.addProject = () => this.addProjectModal.add();
+    window.saveOrder = () => this.saveOrder();
   }
 
   showWork() {
@@ -67,5 +68,15 @@ class PortfolioApp {
   openAdd(categoryId) {
     if (!this.admin.canEdit()) return;
     this.addProjectModal.open(categoryId);
+  }
+
+  saveOrder() {
+    if (!this.admin.canEdit()) return;
+    const currentId = this.detail.currentId;
+    if (this.store.lockDefaultOrder()) {
+      this.renderer.render();
+      if (currentId) this.detail.open(currentId);
+      alert('Project and media order saved for this browser.');
+    }
   }
 }
