@@ -33,8 +33,9 @@ class MediaManager {
     this.bindDragEvents(item, project);
 
     const src = this.formatMediaSrc(media.src);
+    const poster = media.poster ? ` poster="${this.formatMediaSrc(media.poster)}"` : '';
     item.innerHTML = media.type === 'video'
-      ? `<div class="media-slot"><video controls preload="metadata" onclick="openLightbox('${src}','video', event)"><source src="${src}" type="video/mp4"></video></div>`
+      ? `<div class="media-slot"><video controls preload="metadata"${poster} onclick="openLightbox('${src}','video', event)"><source src="${src}" type="video/mp4"></video></div>`
       : `<div class="media-slot"><img src="${src}" alt="" onclick="openLightbox('${src}','image', event)"></div>`;
 
     const removeButton = document.createElement('button');
