@@ -77,9 +77,9 @@ window.PortfolioData = {
       year: '2025',
       cat: 'graphics',
       media: [
-        { src: 'wildthings_1080.mp4', type: 'video' },
         { src: 'XRshared-01.jpg', type: 'image' },
-        { src: 'XRshared-02.jpg', type: 'image' }
+        { src: 'XRshared-02.jpg', type: 'image' },
+        { src: 'wildthings_1080.mp4', type: 'video' }
       ],
       desc: `<strong>The Piece of Wild Things (AR Book, 2026)</strong><br><br>A visual annotation of Wendell Berry's poem "The Peace of Wild Things," with personal narratives written as footnotes throughout the printed book. Each page triggers an augmented reality layer when scanned: the first generates a branching structure that appears differently with every reading, while the rest unfold AR elements anchored to the text. Built using Mind AR for image tracking and A-Frame for 3D rendering. The project uses the footnote format — typically reserved for citations — to hold personal stories instead, positioning them where references would go but containing my own writing about growth and connection.`
     }
