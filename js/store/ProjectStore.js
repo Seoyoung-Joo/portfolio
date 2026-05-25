@@ -2,7 +2,10 @@ class ProjectStore {
   constructor(defaultProjects) {
     this.defaultProjects = defaultProjects;
     this.projectOrder = new Map(defaultProjects.map((project, index) => [project.id, index]));
+    this.mediaOrderVersion = 'media-order-2';
+    this.mediaOrderVersionKey = 'pf_media_order_version';
     this.projects = this.loadProjects();
+    this.migrateMediaOrder();
     this.save();
   }
 
@@ -41,9 +44,19 @@ class ProjectStore {
     return merged;
   }
 
+  migrateMediaOrder() {
+    if (localStorage.getItem(this.mediaOrderVersionKey) === this.mediaOrderVersion) return;
+    this.projects.forEach(project => {
+      const defaultProject = this.findDefaultById(project.id);
+      if (!defaultProject) return;
+      project.media = (defaultProject.media || []).map(media => ({ ...media }));
+    });
+  }
+
   save() {
     try {
       localStorage.setItem('pf_projects', JSON.stringify(this.projects));
+      localStorage.setItem(this.mediaOrderVersionKey, this.mediaOrderVersion);
       return true;
     } catch (err) {
       alert('This file is too large to save in the browser. Use a videos/ path or a smaller image.');
