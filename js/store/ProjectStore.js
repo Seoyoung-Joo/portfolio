@@ -73,28 +73,22 @@ class ProjectStore {
     this.save();
   }
 
-  moveProject(projectId, offset) {
-    const from = this.projects.findIndex(project => project.id === projectId);
+  moveMedia(projectId, index, offset) {
+    const project = this.findById(projectId);
+    if (!project || !Array.isArray(project.media)) return false;
+    const from = index;
     const to = from + offset;
-    if (from < 0 || to < 0 || to >= this.projects.length) return false;
-    const moved = this.projects.splice(from, 1)[0];
-    this.projects.splice(to, 0, moved);
+    if (from < 0 || to < 0 || to >= project.media.length) return false;
+    const moved = project.media.splice(from, 1)[0];
+    project.media.splice(to, 0, moved);
     return true;
   }
 
-  resetDefaultOrder() {
-    const currentById = new Map(this.projects.map(project => [project.id, project]));
-    const orderedDefaults = this.defaultProjects.map(defaultProject => {
-      const currentProject = currentById.get(defaultProject.id) || {};
-      return {
-        ...defaultProject,
-        ...currentProject,
-        cat: defaultProject.cat,
-        media: defaultProject.media.map(media => ({ ...media }))
-      };
-    });
-    const customProjects = this.projects.filter(project => !this.projectOrder.has(project.id));
-    this.projects = [...orderedDefaults, ...customProjects];
+  resetMediaDefaultOrder(projectId) {
+    const project = this.findById(projectId);
+    const defaultProject = this.findDefaultById(projectId);
+    if (!project || !defaultProject) return false;
+    project.media = (defaultProject.media || []).map(media => ({ ...media }));
     return this.save();
   }
 }

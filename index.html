@@ -311,6 +311,12 @@ body {
   text-transform:uppercase;
   color:#aaa;
 }
+.order-empty {
+  border-top:1px solid #e8e8e8;
+  padding-top:.65rem;
+  font-size:.75rem;
+  color:#aaa;
+}
 .order-controls {
   display:flex;
   gap:.25rem;
@@ -538,14 +544,14 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
     <div class="desc-tools">
       <button onclick="toggleBold()">Bold</button>
       <button onclick="saveDesc()">Save Description</button>
-      <button id="order-panel-toggle">Order Panel</button>
+      <button id="order-panel-toggle">Media Order</button>
     </div>
   </div>
 </div>
 
 <div class="order-panel" id="order-panel">
   <div class="order-panel-head">
-    <h3>Project Order</h3>
+    <h3>Media Order</h3>
     <button class="order-close" onclick="closeOrderPanel()">×</button>
   </div>
   <div class="order-list" id="order-list"></div>
@@ -581,16 +587,16 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
   </div>
 </div>
 
-<script src="js/data/projects.js?v=order-panel-3"></script>
-<script src="js/store/ProjectStore.js?v=order-panel-3"></script>
-<script src="js/controllers/AdminController.js?v=order-panel-3"></script>
-<script src="js/controllers/AboutController.js?v=order-panel-3"></script>
-<script src="js/views/ProjectRenderer.js?v=order-panel-3"></script>
-<script src="js/controllers/MediaManager.js?v=order-panel-3"></script>
-<script src="js/views/ProjectDetailView.js?v=order-panel-3"></script>
-<script src="js/views/AddProjectModal.js?v=order-panel-3"></script>
-<script src="js/views/OrderPanel.js?v=order-panel-3"></script>
-<script src="js/PortfolioApp.js?v=order-panel-3"></script>
-<script src="js/main.js?v=order-panel-3"></script>
+<script src="js/data/projects.js?v=media-order-1"></script>
+<script src="js/store/ProjectStore.js?v=media-order-1"></script>
+<script src="js/controllers/AdminController.js?v=media-order-1"></script>
+<script src="js/controllers/AboutController.js?v=media-order-1"></script>
+<script src="js/views/ProjectRenderer.js?v=media-order-1"></script>
+<script src="js/controllers/MediaManager.js?v=media-order-1"></script>
+<script src="js/views/ProjectDetailView.js?v=media-order-1"></script>
+<script src="js/views/AddProjectModal.js?v=media-order-1"></script>
+<script src="js/views/OrderPanel.js?v=media-order-1"></script>
+<script src="js/PortfolioApp.js?v=media-order-1"></script>
+<script src="js/main.js?v=media-order-1"></script>
 </body>
 </html>

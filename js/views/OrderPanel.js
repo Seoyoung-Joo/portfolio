@@ -1,9 +1,7 @@
 class OrderPanel {
-  constructor(store, renderer, detailView, categories) {
+  constructor(store, detailView) {
     this.store = store;
-    this.renderer = renderer;
     this.detailView = detailView;
-    this.categories = categories;
     this.panel = document.getElementById('order-panel');
     this.list = document.getElementById('order-list');
   }
@@ -27,68 +25,91 @@ class OrderPanel {
 
   render() {
     this.list.innerHTML = '';
-    this.store.projects.forEach((project, index) => {
-      this.list.appendChild(this.createRow(project, index));
+    const project = this.currentProject();
+    if (!project || !Array.isArray(project.media) || project.media.length === 0) {
+      this.list.appendChild(this.createEmptyState());
+      return;
+    }
+
+    project.media.forEach((media, index) => {
+      this.list.appendChild(this.createRow(media, index, project.media.length));
     });
   }
 
-  createRow(project, index) {
+  createEmptyState() {
+    const empty = document.createElement('div');
+    empty.className = 'order-empty';
+    empty.textContent = 'No media in this project.';
+    return empty;
+  }
+
+  createRow(media, index, total) {
     const row = document.createElement('div');
     row.className = 'order-row';
 
     const title = document.createElement('div');
     title.className = 'order-title';
-    title.textContent = project.title;
+    title.textContent = this.mediaLabel(media, index);
 
-    const category = document.createElement('div');
-    category.className = 'order-cat';
-    category.textContent = this.categories.find(cat => cat.id === project.cat)?.label || project.cat;
+    const type = document.createElement('div');
+    type.className = 'order-cat';
+    type.textContent = media.type || 'media';
 
     const text = document.createElement('div');
     text.className = 'order-text';
     text.appendChild(title);
-    text.appendChild(category);
+    text.appendChild(type);
 
     const controls = document.createElement('div');
     controls.className = 'order-controls';
-    controls.appendChild(this.createMoveButton('↑', project.id, -1, index === 0));
-    controls.appendChild(this.createMoveButton('↓', project.id, 1, index === this.store.projects.length - 1));
+    controls.appendChild(this.createMoveButton('↑', index, -1, index === 0));
+    controls.appendChild(this.createMoveButton('↓', index, 1, index === total - 1));
 
     row.appendChild(text);
     row.appendChild(controls);
     return row;
   }
 
-  createMoveButton(label, projectId, offset, disabled) {
+  mediaLabel(media, index) {
+    const src = media.src || '';
+    const clean = src.split('/').pop().split('?')[0] || `Media ${index + 1}`;
+    return `${index + 1}. ${clean}`;
+  }
+
+  createMoveButton(label, index, offset, disabled) {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = label;
     button.disabled = disabled;
-    button.onclick = () => this.move(projectId, offset);
+    button.onclick = () => this.move(index, offset);
     return button;
   }
 
-  move(projectId, offset) {
-    if (!this.store.moveProject(projectId, offset)) return;
-    this.renderer.render();
+  move(index, offset) {
+    const project = this.currentProject();
+    if (!project || !this.store.moveMedia(project.id, index, offset)) return;
     this.render();
+    this.refreshDetail();
   }
 
   save() {
     if (this.store.save()) {
-      this.renderer.render();
       this.refreshDetail();
-      alert('Current order saved for this browser.');
+      alert('Current media order saved for this browser.');
     }
   }
 
   resetDefault() {
-    if (this.store.resetDefaultOrder()) {
-      this.renderer.render();
+    const project = this.currentProject();
+    if (project && this.store.resetMediaDefaultOrder(project.id)) {
       this.render();
       this.refreshDetail();
-      alert('Default order restored for this browser.');
+      alert('Default media order restored for this browser.');
     }
+  }
+
+  currentProject() {
+    return this.store.findById(this.detailView.currentId);
   }
 
   refreshDetail() {

@@ -11,7 +11,7 @@ class PortfolioApp {
       onAdd: categoryId => this.openAdd(categoryId)
     });
     this.addProjectModal = new AddProjectModal(this.store, this.renderer);
-    this.orderPanel = new OrderPanel(this.store, this.renderer, this.detail, this.categories);
+    this.orderPanel = new OrderPanel(this.store, this.detail);
   }
 
   init() {
