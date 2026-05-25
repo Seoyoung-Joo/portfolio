@@ -11,6 +11,7 @@ class PortfolioApp {
       onAdd: categoryId => this.openAdd(categoryId)
     });
     this.addProjectModal = new AddProjectModal(this.store, this.renderer);
+    this.orderPanel = new OrderPanel(this.store, this.renderer, this.detail, this.categories);
   }
 
   init() {
@@ -26,6 +27,7 @@ class PortfolioApp {
       if (event.key === 'Escape') {
         this.detail.close();
         this.addProjectModal.close();
+        this.orderPanel.close();
       }
     });
 
@@ -49,6 +51,9 @@ class PortfolioApp {
     window.closeAdd = () => this.addProjectModal.close();
     window.addProject = () => this.addProjectModal.add();
     window.saveOrder = () => this.saveOrder();
+    window.toggleOrderPanel = () => this.toggleOrderPanel();
+    window.closeOrderPanel = () => this.orderPanel.close();
+    window.resetOrder = () => this.resetOrder();
   }
 
   showWork() {
@@ -72,11 +77,16 @@ class PortfolioApp {
 
   saveOrder() {
     if (!this.admin.canEdit()) return;
-    const currentId = this.detail.currentId;
-    if (this.store.lockDefaultOrder()) {
-      this.renderer.render();
-      if (currentId) this.detail.open(currentId);
-      alert('Project and media order saved for this browser.');
-    }
+    this.orderPanel.save();
+  }
+
+  toggleOrderPanel() {
+    if (!this.admin.canEdit()) return;
+    this.orderPanel.toggle();
+  }
+
+  resetOrder() {
+    if (!this.admin.canEdit()) return;
+    this.orderPanel.resetDefault();
   }
 }

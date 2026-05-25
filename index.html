@@ -252,6 +252,99 @@ body {
 .desc-tools { display:none; gap:.5rem; margin-top:.75rem; }
 .desc-tools button { padding:8px 12px; background:#000; color:#fff; border:none; cursor:pointer; font-family:var(--font); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; }
 
+.order-panel {
+  display:none;
+  position:fixed;
+  top:1rem;
+  right:1rem;
+  z-index:500;
+  width:min(320px, calc(100vw - 2rem));
+  max-height:calc(100vh - 2rem);
+  overflow:auto;
+  background:#fff;
+  color:#000;
+  border:1px solid #000;
+  padding:1rem;
+}
+.order-panel.open { display:block; }
+.order-panel-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:.75rem;
+}
+.order-panel h3 {
+  font-size:.6875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.order-close {
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:var(--font);
+  font-size:16px;
+  line-height:1;
+}
+.order-list {
+  display:flex;
+  flex-direction:column;
+  gap:.45rem;
+}
+.order-row {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) auto;
+  gap:.65rem;
+  align-items:center;
+  border-top:1px solid #e8e8e8;
+  padding-top:.45rem;
+}
+.order-title {
+  font-size:.8rem;
+  line-height:1.25;
+}
+.order-cat {
+  margin-top:.2rem;
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#aaa;
+}
+.order-controls {
+  display:flex;
+  gap:.25rem;
+}
+.order-controls button,
+.order-panel-actions button {
+  background:#000;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  font-family:var(--font);
+  font-size:.6875rem;
+  line-height:1;
+}
+.order-controls button {
+  width:24px;
+  height:24px;
+}
+.order-controls button:disabled {
+  opacity:.18;
+  cursor:default;
+}
+.order-panel-actions {
+  display:flex;
+  gap:.5rem;
+  margin-top:1rem;
+}
+.order-panel-actions button {
+  flex:1;
+  padding:8px 10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
 /* ── ADD modal ── */
 .add-bg { display:none; position:fixed; inset:0; z-index:400; background:rgba(0,0,0,.65); align-items:center; justify-content:center; }
 .add-bg.open { display:flex; animation:fadeIn .18s ease forwards; }
@@ -445,8 +538,20 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
     <div class="desc-tools">
       <button onclick="toggleBold()">Bold</button>
       <button onclick="saveDesc()">Save Description</button>
-      <button onclick="saveOrder()">Save Order</button>
+      <button onclick="toggleOrderPanel()">Order Panel</button>
     </div>
+  </div>
+</div>
+
+<div class="order-panel" id="order-panel">
+  <div class="order-panel-head">
+    <h3>Project Order</h3>
+    <button class="order-close" onclick="closeOrderPanel()">×</button>
+  </div>
+  <div class="order-list" id="order-list"></div>
+  <div class="order-panel-actions">
+    <button onclick="saveOrder()">Save</button>
+    <button onclick="resetOrder()">Reset</button>
   </div>
 </div>
 
@@ -484,6 +589,7 @@ Currently pursuing a BFA in Art and Computation at Rhode Island School of Design
 <script src="js/controllers/MediaManager.js"></script>
 <script src="js/views/ProjectDetailView.js"></script>
 <script src="js/views/AddProjectModal.js"></script>
+<script src="js/views/OrderPanel.js"></script>
 <script src="js/PortfolioApp.js"></script>
 <script src="js/main.js"></script>
 </body>

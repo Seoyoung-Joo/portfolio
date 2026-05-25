@@ -9,22 +9,40 @@ class ProjectStore {
   loadProjects() {
     const savedProjects = JSON.parse(localStorage.getItem('pf_projects') || 'null');
     if (!Array.isArray(savedProjects) || savedProjects.length === 0) {
-      return this.sortProjects(this.defaultProjects);
+      return this.cloneDefaults();
     }
-    return this.sortProjects(savedProjects);
+    return this.mergeSavedProjects(savedProjects);
   }
 
-  sortProjects(projects) {
-    return [...projects].sort((a, b) => {
-      const ai = this.projectOrder.has(a.id) ? this.projectOrder.get(a.id) : Number.MAX_SAFE_INTEGER;
-      const bi = this.projectOrder.has(b.id) ? this.projectOrder.get(b.id) : Number.MAX_SAFE_INTEGER;
-      return ai - bi;
+  cloneDefaults() {
+    return this.defaultProjects.map(project => ({
+      ...project,
+      media: (project.media || []).map(media => ({ ...media }))
+    }));
+  }
+
+  mergeSavedProjects(savedProjects) {
+    const defaultById = new Map(this.defaultProjects.map(project => [project.id, project]));
+    const seen = new Set();
+    const merged = savedProjects
+      .filter(project => project && project.id && !seen.has(project.id))
+      .map(project => {
+        seen.add(project.id);
+        const defaultProject = defaultById.get(project.id);
+        return defaultProject ? { ...defaultProject, ...project } : project;
+      });
+
+    this.defaultProjects.forEach(project => {
+      if (!seen.has(project.id)) {
+        merged.push({ ...project, media: (project.media || []).map(media => ({ ...media })) });
+      }
     });
+
+    return merged;
   }
 
   save() {
     try {
-      this.projects = this.sortProjects(this.projects);
       localStorage.setItem('pf_projects', JSON.stringify(this.projects));
       return true;
     } catch (err) {
@@ -55,7 +73,16 @@ class ProjectStore {
     this.save();
   }
 
-  lockDefaultOrder() {
+  moveProject(projectId, offset) {
+    const from = this.projects.findIndex(project => project.id === projectId);
+    const to = from + offset;
+    if (from < 0 || to < 0 || to >= this.projects.length) return false;
+    const moved = this.projects.splice(from, 1)[0];
+    this.projects.splice(to, 0, moved);
+    return true;
+  }
+
+  resetDefaultOrder() {
     const currentById = new Map(this.projects.map(project => [project.id, project]));
     const orderedDefaults = this.defaultProjects.map(defaultProject => {
       const currentProject = currentById.get(defaultProject.id) || {};
