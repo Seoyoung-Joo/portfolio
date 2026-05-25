@@ -23,12 +23,12 @@ window.PortfolioData = {
       year: '2025 Jan',
       cat: 'installation',
       media: [
+        { src: 'goodnight01_수정.jpg', type: 'image' },
+        { src: 'MNST8851.jpg', type: 'image' },
+        { src: 'goodnight02.jpg', type: 'image' },
         { src: 'goodnight05.jpg', type: 'image' },
         { src: 'goodnight04.jpg', type: 'image' },
-        { src: 'goodnight02.jpg', type: 'image' },
-        { src: 'goodnight_1080.mp4', type: 'video' },
-        { src: 'MNST8851.jpg', type: 'image' },
-        { src: 'goodnight01_수정.jpg', type: 'image' }
+        { src: 'goodnight_1080.mp4', type: 'video' }
       ],
       desc: `<strong>Good Night, Baby. Do You Still Remember? (Mixed media, Variable installation, 2025)</strong><br><br>Two cell-like sculptures, each housing a projector, cast personal video footage from the artist's own archive onto the surrounding space. One references the structure of a nerve cell; the other takes the shape of a speech bubble. The work began from a recurring experience: people from the distant past reappearing in dreams — old classmates, brief friendships, connections that had quietly faded. The piece holds space for what returns without being called back, and whether forgetting is ever really complete.`
     },

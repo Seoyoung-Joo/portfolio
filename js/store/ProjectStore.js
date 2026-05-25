@@ -2,7 +2,7 @@ class ProjectStore {
   constructor(defaultProjects) {
     this.defaultProjects = defaultProjects;
     this.projectOrder = new Map(defaultProjects.map((project, index) => [project.id, index]));
-    this.mediaOrderVersion = 'media-order-2';
+    this.mediaOrderVersion = 'media-order-3';
     this.mediaOrderVersionKey = 'pf_media_order_version';
     this.projects = this.loadProjects();
     this.migrateMediaOrder();
