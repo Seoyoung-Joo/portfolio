@@ -34,6 +34,11 @@ class PortfolioApp {
     document.getElementById('add-bg').addEventListener('click', event => {
       if (event.target === event.currentTarget) this.addProjectModal.close();
     });
+
+    document.getElementById('order-panel-toggle')?.addEventListener('click', event => {
+      event.preventDefault();
+      this.toggleOrderPanel();
+    });
   }
 
   bindGlobalHandlers() {
