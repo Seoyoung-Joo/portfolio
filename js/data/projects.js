@@ -1,8 +1,8 @@
 window.PortfolioData = {
   categories: [
-    { id: 'installation', label: 'Installation' },
     { id: 'web-based', label: 'Web Based' },
     { id: 'graphics', label: 'Graphics' },
+    { id: 'installation', label: 'Installation' },
   ],
   projects: [
     {
